@@ -3,6 +3,8 @@ import { getCurrentUser } from "../lib/appwrite";
 
 export const GlobalContext = createContext();
 
+export const useGlobalContext = () => useContext(GlobalContext);
+
 export const GlobalProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
@@ -11,6 +13,7 @@ export const GlobalProvider = ({ children }) => {
   useEffect(() => {
     getCurrentUser()
       .then((response) => {
+        console.log('user',response)
         if (response) {
           setIsLoggedIn(true);
           setUser(response);
@@ -23,7 +26,7 @@ export const GlobalProvider = ({ children }) => {
         console.log(err);
       })
       .finally(() => {
-        setIsLoggedIn(false);
+        setIsLoading(false);
       });
   }, []);
 

@@ -1,4 +1,3 @@
-import { useContext } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Image, ScrollView, Text, View } from 'react-native';
 import { Redirect, router } from 'expo-router';
@@ -6,11 +5,10 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { images } from '../constants'
 import CustomButton from '../components/CustomButton';
-import { GlobalContext } from '../context/GlobalProvider';
+import { useGlobalContext } from '../context/GlobalProvider';
 
 export default function App() {
-  const { isLoading, isLoggedIn} = useContext(GlobalContext);
-  console.log(isLoggedIn);
+  const { isLoading, isLoggedIn} = useGlobalContext();
 
   if(!isLoading && isLoggedIn) return <Redirect href='/home'/>
 
