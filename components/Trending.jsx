@@ -3,10 +3,12 @@ import {
   ImageBackground,
   Image,
   TouchableOpacity,
+  Animated,
 } from "react-native";
 import * as Animatable from "react-native-animatable";
-import { useState } from "react";
+import React, { useState } from "react";
 import { Video, ResizeMode } from "expo-av";
+import { ExpandingDot } from "react-native-animated-pagination-dots";
 
 import { icons } from "../constants";
 
@@ -30,8 +32,6 @@ const zoomOut = {
 
 const TrendingItem = ({ activeItem, item }) => {
   const [play, setPlay] = useState(false);
-
-  console.log(item.video);
 
   return (
     <Animatable.View
@@ -63,7 +63,7 @@ const TrendingItem = ({ activeItem, item }) => {
         >
           <ImageBackground
             source={{ uri: item.thumbnail }}
-            className="w-52 h-72 rounded-[35px] my-5 overflow-hidden shadow-lg shadow-black/40"
+            className="w-48 h-72 rounded-[20px] my-5 overflow-hidden shadow-lg shadow-black/40"
             resizeMode="cover"
           />
 
@@ -80,6 +80,7 @@ const TrendingItem = ({ activeItem, item }) => {
 
 const Trending = ({ posts }) => {
   const [activeItem, setActiveItem] = useState(posts[0]);
+  const scrollX = React.useRef( new Animated.Value(0)).current;
 
   const viewableItemsChanged = ({ viewableItems }) => {
     if (viewableItems.length > 0) {
@@ -88,9 +89,18 @@ const Trending = ({ posts }) => {
   };
 
   return (
+    <>
     <FlatList
       data={posts}
       keyExtractor={(item) => item.$id}
+      showsHorizontalScrollIndicator={false}
+      onScroll={Animated.event(
+        [{ nativeEvent: { contentOffset: { x: scrollX } } }],
+        {
+          useNativeDriver: false,
+        }
+      )}
+      pagingEnabled
       renderItem={({ item }) => (
         <TrendingItem activeItem={activeItem} item={item} />
       )}
@@ -98,9 +108,34 @@ const Trending = ({ posts }) => {
       viewabilityConfig={{
         itemVisiblePercentThreshold: 70,
       }}
-      contentOffset={{ x: 170 }}
+      contentOffset={{ x: 200 }}
       horizontal
-    />
+      decelerationRate={'normal'}
+      scrollEventThrottle={16}
+      contentContainerStyle={{
+        paddingStart: 80,
+        paddingEnd: 80
+      }}
+      />
+
+      <ExpandingDot 
+      data={posts}
+      expandingDotWidth={30}
+      scrollX={scrollX}
+      inActiveDotOpacity={0.6}
+      activeDotColor='#ff9001'
+      dotStyle={{
+        width: 10,
+        height: 10,
+        backgroundColor: '#ff9001',
+        borderRadius: 5,
+        marginHorizontal: 5
+      }}
+      containerStyle={{
+        top: 400,
+      }}
+      />
+      </>
   );
 };
 
