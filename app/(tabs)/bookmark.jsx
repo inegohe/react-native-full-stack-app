@@ -1,10 +1,7 @@
-import {
-  View,
-  Text,
-  FlatList,
-} from "react-native";
+import { View, Text, FlatList } from "react-native";
 import React, { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { StatusBar } from "expo-status-bar";
 
 import SearchInput from "../../components/SearchInput";
 import EmptyState from "../../components/EmptyState";
@@ -32,13 +29,13 @@ const Bookmark = () => {
         renderItem={({ item }) => <VideoCard video={item} />}
         ListHeaderComponent={() => (
           <View className="my-6 px-4">
-            <Text className="font-pmedium text-sm text-gray-100">
-              Bookmark Posts
+            <Text className="font-pmedium text-2xl text-white">
+              Saved Videos
             </Text>
             <Text className="text-2xl font-psemibold text-white">{query}</Text>
 
-            <View className='mt-6 mb-8'>
-            <SearchInput initialQuery={query} />
+            <View className="mt-3 mb-8">
+              <SearchInput initialQuery={query} />
             </View>
           </View>
         )}
@@ -49,6 +46,8 @@ const Bookmark = () => {
           />
         )}
       />
+
+      <StatusBar backgroundColor="#161622" style="light" />
     </SafeAreaView>
   );
 };

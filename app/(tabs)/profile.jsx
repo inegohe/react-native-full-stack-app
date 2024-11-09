@@ -1,6 +1,7 @@
 import { View, Text, FlatList, Image, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { router} from "expo-router";
+import { router } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 
 import EmptyState from "../../components/EmptyState";
 import { getUserPosts, signOut } from "../../lib/appwrite";
@@ -20,7 +21,7 @@ const Profile = () => {
     setUser(null);
     setIsLoggedIn(false);
 
-    router.replace('/sign-in');
+    router.replace("/sign-in");
   };
 
   return (
@@ -79,6 +80,8 @@ const Profile = () => {
           />
         )}
       />
+
+      <StatusBar backgroundColor="#161622" style="light" />
     </SafeAreaView>
   );
 };
