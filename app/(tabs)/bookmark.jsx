@@ -17,9 +17,9 @@ const Bookmark = () => {
 
   const [refreshing, setRefreshing] = useState(false);
 
-  useEffect(() => {
-    refetch();
-  }, [query]);
+  // useEffect(() => {
+  //   refetch();
+  // }, [query]);
 
   return (
     <SafeAreaView className="bg-primary h-full">
